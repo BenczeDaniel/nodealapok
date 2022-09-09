@@ -1,18 +1,27 @@
-console.log("Csak az Audi !!")
+import express, { request } from 'express';
+import { diakok } from './adatok.js';
 
-const szam= Math.round(Math.random()*100)
-console.log(`${szam} Ennyi a véletlen szám összege!`)
+const app = express();
+app.use(express.json())
 
-if(szam>=50)
-   console.log("gratula! átmentél")
+app.get('/',(request,response) => {
+   // response.send('Saját szerverünk küldi ezt az üzenetet')
+   response.send(diakok)
+})
 
-else
-    console.log("sajnos megbuktál!")
 
-//rövidebben
+app.get('/:id',(request,response) => {
+    const {id} = request.params//a u url-ben érkező paraméterek elérése
+    const filteredArr= diakok.filter(obj=>obj.id==id)
+    response.send(filteredArr)})
 
-szam=>50 ? console.log("Gratulálok!!!") : console.log("Öszintén sajnálom!")
 
-import { diakok } from "./adatok.js"
+    app.post('/',(request,response) => {
+        const {id,nev,osz}=request.body
+        diakok.push({id:id,nev:nev,osz:osz})
+        response.send(diakok)
+    })
+    app.get('*',(request,response) => {
+        response.status(404).send('<h1>Az oldal nem létezik....</h1>')})
 
-console.log(`a diakok létszáma: ${diakok}.length`)
+app.listen(5000,() => console.log('Fut a szerver az 5000-res porton!!'))

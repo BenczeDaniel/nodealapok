@@ -1,0 +1,28 @@
+console.log("Csak az Audi !!")
+
+const szam= Math.round(Math.random()*100)
+console.log(`${szam} Ennyi a véletlen szám összege!`)
+
+if(szam>=50)
+   console.log("gratula! átmentél")
+
+else
+    console.log("sajnos megbuktál!")
+
+//rövidebben
+
+szam=>50 ? console.log("Gratulálok!!!") : console.log("Öszintén sajnálom!")
+
+import { diakok } from "./adatok.js"
+import {pers} from "./adatok.js"
+
+console.log(`a diakok létszáma: ${diakok}.length`)
+
+
+for(let obj of diakok){
+    console.log(`Kedves ${obj.nev} !
+    Ha több infóra lenne szüksége, csengessen meg.
+    Tisztelettel, ${pers.nev},
+    tel:${pers.Tel}
+    `)
+}
